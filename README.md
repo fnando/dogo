@@ -30,9 +30,9 @@ You can create shortened urls by using `Dogo::Url.new`.
 
 ```ruby
 shortened = Dogo::Url.new("http://hellobits.com")
-shortened.id    #=> return some an integer
-shortened.url   #=> return the long url
-shortened.full  #=> return full shortened url
+shortened.id    #=> return some an integer in base 36
+shortened.url   #=> return the shortened url
+shortened.full  #=> return full url
 ```
 
 Starting the server:

@@ -1,6 +1,6 @@
 module Dogo
   class Url
-    attr_reader :url, :id
+    attr_reader :full, :id
 
     # Check if the given URL is valid, according the the
     # +URI+ regular expression.
@@ -17,9 +17,13 @@ module Dogo
       new Dogo.redis.get(key)
     end
 
-    def initialize(url)
-      @url = url
+    def initialize(full)
+      @full = full
       load_or_create
+    end
+
+    def url
+      File.join(Dogo.host, id)
     end
 
     # Increment the click counter for this URL.
@@ -48,12 +52,12 @@ module Dogo
         @id = key.split(":").last
       else
         @id = next_id.to_s(36)
-        Dogo.redis.set("urls:#{hash}:#{id}", url)
+        Dogo.redis.set("urls:#{hash}:#{id}", full)
       end
     end
 
     def hash
-      @hash ||= Digest::MD5.hexdigest(url)
+      @hash ||= Digest::MD5.hexdigest(full)
     end
   end
 end

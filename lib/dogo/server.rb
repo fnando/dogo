@@ -17,12 +17,11 @@ module Dogo
     end
 
     get "/shorten" do
-      require "pry"; binding.pry
       halt 401, erb(:"401") unless Dogo.api_key == params[:api_key]
 
       if Dogo::Url.valid?(params[:url])
         shortened = Dogo::Url.new(params[:url])
-        "#{request.scheme}://#{request.host_with_port}/#{shortened.id}"
+        shortened.url
       else
         status 422
         erb(:"422")
@@ -30,10 +29,10 @@ module Dogo
     end
 
     get "/:id" do
-      url = find_or_pass(params[:id])
+      shortened = find_or_pass(params[:id])
+      shortened.click!
 
-      url.click!
-      redirect url.url
+      redirect shortened.full
     end
 
     not_found do
