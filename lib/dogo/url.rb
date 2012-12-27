@@ -8,8 +8,14 @@ module Dogo
       URI::DEFAULT_PARSER.regexp[:ABS_URI] =~ url.to_s
     end
 
-    #
-    #
+    # Check if the given URL is already shortened.
+    # This will consider the host name and check if the url is already saved.
+    def self.shortened?(url)
+      url.start_with?(Dogo.host) &&
+      find(url.split("/").last)
+    end
+
+    # Find a URL by its shortened id.
     def self.find(id)
       key = Dogo.redis.keys("urls:*:#{id}").first
       return unless key
