@@ -20,6 +20,11 @@ module Dogo
     @redis = redis
   end
 
+  # Configure Dogo attributes
+  def self.configure(&block)
+    yield self
+  end
+
   class << self
     # Set the API Key that will be used to create new
     # URLs.
