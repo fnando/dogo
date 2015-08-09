@@ -19,7 +19,9 @@ module Dogo
     get "/shorten" do
       halt 401, erb(:"401") unless Dogo.api_key == params[:api_key]
 
-      if Dogo::Url.shortened?(params[:url])
+      if Dogo::Url.skip_shortening?(params[:url])
+        params[:url]
+      elsif Dogo::Url.shortened?(params[:url])
         params[:url]
       elsif Dogo::Url.valid?(params[:url])
         shortened = Dogo::Url.new(params[:url])

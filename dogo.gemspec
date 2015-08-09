@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 require "./lib/dogo/version"
 
 Gem::Specification.new do |gem|
