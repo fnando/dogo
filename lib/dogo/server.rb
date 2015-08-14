@@ -1,7 +1,7 @@
 module Dogo
   class Server < Sinatra::Application
     set :views, File.expand_path("../server/views", __FILE__)
-    set :public_dir, File.expand_path("../server/assets", __FILE__)
+    set :public_folder, File.expand_path("../server/assets", __FILE__)
     set :static, true
 
     helpers do
@@ -13,7 +13,8 @@ module Dogo
     end
 
     get "/" do
-      redirect Dogo.default_url
+      redirect Dogo.default_url unless Dogo.api_key == params[:api_key]
+      erb(:index)
     end
 
     get "/shorten" do
