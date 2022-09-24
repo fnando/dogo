@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <title><%= Dogo.host %></title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Welcome to <%= Dogo.host %></h1>
+      <div id="form">
+        <input type="hidden" name="api_key" value="<%= params[:api_key] %>">
+        <input type="text" name="url">
+        <input type="submit" id="submit" value="Short it!!">
+      </div>
+
+      <div id='result'>
+        <h2>your shortened URL is:</h2>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/application.js"></script>
+  </body>
+</html>
