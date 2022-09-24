@@ -2,6 +2,12 @@ module Dogo
   class Url
     attr_reader :full, :id
 
+    # Rules for skipping url shortening.
+    SKIP_RULES = [
+      # Skip twitter urls
+      -> url { url.match(%r{https://twitter.com/.+?/status/\d+}) }
+    ]
+
     # Check if the given URL is valid, according the the
     # +URI+ regular expression.
     def self.valid?(url)
@@ -13,6 +19,12 @@ module Dogo
     def self.shortened?(url)
       url.start_with?(Dogo.host) &&
       find(url.split("/").last)
+    end
+
+    # Check if shortening must be skipped.
+    # Useful for cases like twitter urls, so that inline embedding can work.
+    def self.skip_shortening?(url)
+      SKIP_RULES.any? {|rule| rule.call(url) }
     end
 
     # Find a URL by its shortened id.
